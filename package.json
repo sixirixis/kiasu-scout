@@ -1,0 +1,10 @@
+{
+  "name": "kiasu-scout",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Parent discovery and business AEO intelligence MVP for Singapore education and children activity businesses.",
+  "scripts": {
+    "build": "echo 'Static MVP: no build step required'",
+    "start": "python -m answerspot_sg_mcp.web"
+  }
+}

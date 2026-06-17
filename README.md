@@ -23,16 +23,30 @@ This MVP is intentionally measurement-first. It does not scrape consumer AI plat
 
 ## What's in the MVP
 
-### Web app
+### Parent-facing discovery loop
 
-- Singapore/SEA landing page and dashboard
+- Parent Scout flow for natural-language discovery questions
+- Child age, location, category, budget and learning-goal context
+- Seeded recommendation cards for Singapore tuition/enrichment/activity/toy providers
+- Feedback capture: saved, contacted, too expensive, too far, not enough info, not suitable for age
+- Local browser storage for demo feedback signals
+
+### Business-facing AEO intelligence
+
 - prompt-pack generator for parent discovery queries
 - form for business/category/location/competitors
 - captured-answer JSON input
 - answer-share report
 - competitor mentions
-- recommended visibility fixes
+- parent intent and objection summaries
+- combined recommendations that translate parent feedback into AEO actions
 - raw report JSON for export/debugging
+
+### Deployable web MVP
+
+- FastAPI app for local/API-backed demos
+- static Vercel build in `public/index.html` with in-browser fallback logic
+- `vercel.json` for Vercel static deployment
 
 ### MCP tools
 
@@ -52,7 +66,7 @@ source .venv/bin/activate
 pip install -e '.[dev]'
 ```
 
-## Run the web MVP
+## Run the web MVP locally
 
 ```bash
 python -m answerspot_sg_mcp.web
@@ -62,6 +76,14 @@ Open:
 
 ```text
 http://127.0.0.1:8000
+```
+
+## Deploy to Vercel
+
+The repo includes a static Vercel entrypoint at `public/index.html`. The deployed demo keeps working even without the Python API because the browser has local fallback logic for parent search, prompt generation and reports.
+
+```bash
+npx vercel --prod
 ```
 
 ## Run as an MCP server
