@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "answerspot-sg-mcp"
+version = "0.1.0"
+description = "MCP server for Singapore/SEA AI answer visibility in children activities, toys, and education sectors"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{name = "AnswerSpot"}]
+dependencies = [
+  "mcp>=1.0.0",
+  "pydantic>=2.0.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.8"]
+
+[project.scripts]
+answerspot-sg-mcp = "answerspot_sg_mcp.server:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]
