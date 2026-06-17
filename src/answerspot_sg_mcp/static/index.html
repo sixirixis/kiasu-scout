@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KiasuScout — AI visibility for Singapore education businesses</title>
+  <style>
+    :root {
+      --ink: #102033;
+      --muted: #667085;
+      --paper: #fffaf1;
+      --card: #ffffff;
+      --brand: #ff6b35;
+      --brand-dark: #d94b1d;
+      --teal: #1aa6a6;
+      --yellow: #ffd166;
+      --line: #eadfce;
+      --good: #067647;
+      --warn: #b54708;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 12%, rgba(255, 209, 102, .35), transparent 24rem),
+        radial-gradient(circle at 88% 4%, rgba(26, 166, 166, .20), transparent 22rem),
+        var(--paper);
+    }
+    header {
+      padding: 42px clamp(18px, 4vw, 56px) 24px;
+      display: grid;
+      gap: 18px;
+      max-width: 1220px;
+      margin: 0 auto;
+    }
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .logo { display: flex; align-items: center; gap: 12px; font-weight: 900; font-size: 1.35rem; }
+    .mark {
+      width: 42px; height: 42px; border-radius: 14px;
+      display: grid; place-items: center;
+      background: linear-gradient(135deg, var(--brand), var(--yellow));
+      box-shadow: 0 10px 30px rgba(255, 107, 53, .24);
+      transform: rotate(-3deg);
+    }
+    .pill { border: 1px solid var(--line); background: rgba(255,255,255,.7); padding: 8px 12px; border-radius: 999px; color: var(--muted); font-size: .9rem; }
+    .hero { display: grid; grid-template-columns: 1.2fr .8fr; gap: 32px; align-items: center; }
+    h1 { font-size: clamp(2.2rem, 6vw, 5.2rem); line-height: .96; margin: 28px 0 18px; letter-spacing: -0.07em; }
+    .accent { color: var(--brand); }
+    .subtitle { font-size: clamp(1.05rem, 2vw, 1.35rem); color: #455468; max-width: 760px; line-height: 1.55; }
+    .hero-card {
+      background: var(--card); border: 1px solid var(--line); border-radius: 28px; padding: 24px;
+      box-shadow: 0 24px 70px rgba(16, 32, 51, .10);
+    }
+    .metric { display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid #f1e7d8; }
+    .metric:last-child { border-bottom: 0; }
+    .metric strong { font-size: 1.5rem; }
+    main { max-width: 1220px; margin: 0 auto; padding: 18px clamp(18px, 4vw, 56px) 56px; }
+    .grid { display: grid; grid-template-columns: 410px 1fr; gap: 22px; align-items: start; }
+    .panel { background: rgba(255,255,255,.86); border: 1px solid var(--line); border-radius: 24px; padding: 20px; box-shadow: 0 16px 40px rgba(16, 32, 51, .07); }
+    h2 { margin: 0 0 12px; letter-spacing: -.03em; }
+    label { font-weight: 700; display: block; margin: 14px 0 7px; }
+    input, textarea, select {
+      width: 100%; border: 1px solid #d8cdbd; border-radius: 14px; padding: 12px 13px;
+      font: inherit; background: white; color: var(--ink);
+    }
+    textarea { min-height: 145px; resize: vertical; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .88rem; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    button {
+      border: 0; border-radius: 14px; padding: 12px 15px; font-weight: 800; cursor: pointer;
+      background: var(--brand); color: white; box-shadow: 0 12px 24px rgba(255, 107, 53, .22);
+    }
+    button.secondary { background: var(--ink); }
+    button.ghost { background: white; color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 16px; }
+    .stat { border: 1px solid var(--line); border-radius: 20px; padding: 16px; background: white; }
+    .stat span { color: var(--muted); font-size: .87rem; }
+    .stat strong { display: block; font-size: 1.8rem; margin-top: 6px; }
+    .report { display: grid; gap: 16px; }
+    .empty { color: var(--muted); padding: 24px; border: 1px dashed #d8cdbd; border-radius: 18px; background: rgba(255,255,255,.55); }
+    .recommendation { border-left: 5px solid var(--teal); background: white; padding: 14px 16px; border-radius: 14px; margin: 10px 0; }
+    .recommendation.urgent, .recommendation.high { border-left-color: var(--brand); }
+    .badge { display: inline-flex; border-radius: 999px; padding: 3px 8px; font-size: .78rem; font-weight: 800; background: #fff1e9; color: var(--brand-dark); margin-right: 8px; }
+    .prompt-list { display: grid; gap: 8px; margin-top: 12px; }
+    .prompt { background: #102033; color: white; padding: 11px 12px; border-radius: 12px; font-size: .92rem; }
+    pre { white-space: pre-wrap; word-break: break-word; background: #0b1726; color: #e7edf5; padding: 14px; border-radius: 16px; max-height: 360px; overflow: auto; }
+    footer { color: var(--muted); font-size: .9rem; margin-top: 28px; }
+    @media (max-width: 900px) { .hero, .grid { grid-template-columns: 1fr; } .cards { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <div class="logo"><div class="mark">🔎</div><span>KiasuScout</span></div>
+      <div class="pill">Singapore-first AI answer visibility</div>
+    </div>
+    <section class="hero">
+      <div>
+        <h1>Find out where <span class="accent">AI sends parents</span>.</h1>
+        <p class="subtitle">An MVP for tuition centres, enrichment classes, kids activities and educational toy brands that need to know whether ChatGPT, Gemini, Perplexity and Google AI recommend them — or their competitors.</p>
+      </div>
+      <aside class="hero-card">
+        <div class="metric"><span>Initial market</span><strong>SG parents</strong></div>
+        <div class="metric"><span>Primary buyer</span><strong>Agencies</strong></div>
+        <div class="metric"><span>MVP mode</span><strong>Captured answers</strong></div>
+      </aside>
+    </section>
+  </header>
+
+  <main class="grid">
+    <section class="panel">
+      <h2>Run a visibility check</h2>
+      <label>Business name</label>
+      <input id="business" value="Little Explorers STEM Club" />
+      <label>Category</label>
+      <input id="category" value="STEM enrichment class" />
+      <label>Location</label>
+      <input id="location" value="Tampines, Singapore" />
+      <label>Competitors <small>(comma-separated)</small></label>
+      <input id="competitors" value="The Learning Lab, Saturday Kids, Nullspace Robotics" />
+      <div class="row">
+        <div>
+          <label>Child age</label>
+          <input id="childAge" value="primary school child" />
+        </div>
+        <div>
+          <label>Budget</label>
+          <input id="budget" value="middle-class" />
+        </div>
+      </div>
+      <label>Captured AI answers JSON</label>
+      <textarea id="answers"></textarea>
+      <div class="actions">
+        <button onclick="generatePrompts()">Generate prompts</button>
+        <button class="secondary" onclick="createReport()">Create report</button>
+        <button class="ghost" onclick="loadSample()">Load sample</button>
+      </div>
+      <footer>Tip: paste answers captured manually from ChatGPT/Gemini/Perplexity for now. Later collectors can automate this.</footer>
+    </section>
+
+    <section class="report">
+      <div class="panel">
+        <h2>Prompt pack</h2>
+        <div id="prompts" class="empty">Generate Singapore parent-focused prompts to test across AI assistants.</div>
+      </div>
+      <div class="panel">
+        <h2>AI visibility report</h2>
+        <div id="report" class="empty">Create a report to see answer share, competitor mentions and recommended fixes.</div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const sampleAnswers = [
+      {
+        platform: "ChatGPT",
+        prompt: "What are the best STEM enrichment classes in Tampines for a primary school child?",
+        answer_text: "Parents often compare 1. Saturday Kids for coding workshops, 2. Nullspace Robotics for robotics pathways, and 3. Little Explorers STEM Club for convenient Tampines-based hands-on science classes."
+      },
+      {
+        platform: "Perplexity",
+        prompt: "Recommend robotics or coding classes for kids near Tampines Singapore.",
+        answer_text: "Saturday Kids and Nullspace Robotics are commonly mentioned options. Check recent parent reviews, age suitability and class locations before booking."
+      }
+    ];
+    document.getElementById('answers').value = JSON.stringify(sampleAnswers, null, 2);
+
+    function payload() {
+      return {
+        business_name: document.getElementById('business').value.trim(),
+        category: document.getElementById('category').value.trim(),
+        location: document.getElementById('location').value.trim(),
+        competitors: document.getElementById('competitors').value.split(',').map(s => s.trim()).filter(Boolean),
+        answers: JSON.parse(document.getElementById('answers').value)
+      };
+    }
+
+    async function loadSample() {
+      const res = await fetch('/api/sample');
+      const data = await res.json();
+      document.getElementById('business').value = data.business_name;
+      document.getElementById('category').value = data.category;
+      document.getElementById('location').value = data.location;
+      document.getElementById('competitors').value = data.competitors.join(', ');
+      document.getElementById('answers').value = JSON.stringify(data.answers, null, 2);
+    }
+
+    async function generatePrompts() {
+      const res = await fetch('/api/prompts', {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          category: document.getElementById('category').value,
+          location: document.getElementById('location').value,
+          child_age: document.getElementById('childAge').value,
+          budget: document.getElementById('budget').value,
+          limit: 8
+        })
+      });
+      const data = await res.json();
+      document.getElementById('prompts').className = 'prompt-list';
+      document.getElementById('prompts').innerHTML = data.prompts.map(p => `<div class="prompt">${escapeHtml(p)}</div>`).join('');
+    }
+
+    async function createReport() {
+      let data;
+      try { data = payload(); }
+      catch (err) { document.getElementById('report').innerHTML = `<pre>Invalid answers JSON: ${escapeHtml(err.message)}</pre>`; return; }
+      const res = await fetch('/api/report', {
+        method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)
+      });
+      const report = await res.json();
+      if (!res.ok) { document.getElementById('report').innerHTML = `<pre>${escapeHtml(JSON.stringify(report, null, 2))}</pre>`; return; }
+      renderReport(report);
+    }
+
+    function renderReport(r) {
+      const score = r.score;
+      const recs = r.recommendations.map(rec => `
+        <div class="recommendation ${rec.priority}">
+          <div><span class="badge">${escapeHtml(rec.priority)}</span><strong>${escapeHtml(rec.area)}</strong></div>
+          <p>${escapeHtml(rec.action)}</p>
+          <small>${escapeHtml(rec.rationale)}</small>
+        </div>`).join('');
+      const competitors = Object.entries(score.competitor_mentions).map(([name, count]) => `<li>${escapeHtml(name)}: ${count}</li>`).join('') || '<li>No competitor mentions detected.</li>';
+      document.getElementById('report').className = '';
+      document.getElementById('report').innerHTML = `
+        <div class="cards">
+          <div class="stat"><span>Answer share</span><strong>${Math.round(score.answer_share * 100)}%</strong></div>
+          <div class="stat"><span>Mentions</span><strong>${score.answers_with_business}/${score.total_answers}</strong></div>
+          <div class="stat"><span>Avg position</span><strong>${score.average_position ?? '—'}</strong></div>
+        </div>
+        <p>${escapeHtml(r.executive_summary)}</p>
+        <h3>Competitor mentions</h3><ul>${competitors}</ul>
+        <h3>Recommended fixes</h3>${recs}
+        <details><summary>Raw report JSON</summary><pre>${escapeHtml(JSON.stringify(r, null, 2))}</pre></details>`;
+    }
+
+    function escapeHtml(str) {
+      return String(str).replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+    }
+  </script>
+</body>
+</html>

@@ -1,6 +1,13 @@
-# AnswerSpot SG MCP
+# KiasuScout
 
-AnswerSpot SG MCP is a first-pass Model Context Protocol server for **AI local answer visibility** in Singapore and Southeast Asia, focused on businesses serving middle-class parents looking for:
+**KiasuScout** is an MVP for Singapore and Southeast Asian businesses that want to know where parents' AI assistants send them.
+
+It combines:
+
+1. a **Model Context Protocol server** for agent workflows, and
+2. a lightweight **web frontend** for running first-pass AI answer visibility reports.
+
+The initial focus is middle-class parents looking for:
 
 - tuition and academic support
 - enrichment classes
@@ -8,11 +15,26 @@ AnswerSpot SG MCP is a first-pass Model Context Protocol server for **AI local a
 - educational toys and learning products
 - camps, workshops, STEM/arts/sports programmes
 
-The server helps agencies and operators answer: **"When parents ask ChatGPT/Gemini/Perplexity/Google AI for recommendations, do we appear, which competitors appear, and what signals are missing?"**
+KiasuScout helps agencies and operators answer:
+
+> "When parents ask ChatGPT, Gemini, Perplexity or Google AI for recommendations, do we appear — or do our competitors?"
 
 This MVP is intentionally measurement-first. It does not scrape consumer AI platforms yet. Instead, it provides prompt packs and analysis tools for answers captured manually, via approved APIs, or by later browser automation.
 
-## MCP tools
+## What's in the MVP
+
+### Web app
+
+- Singapore/SEA landing page and dashboard
+- prompt-pack generator for parent discovery queries
+- form for business/category/location/competitors
+- captured-answer JSON input
+- answer-share report
+- competitor mentions
+- recommended visibility fixes
+- raw report JSON for export/debugging
+
+### MCP tools
 
 - `generate_prompt_pack` — create Singapore/SEA parent-oriented prompt sets for a category/location.
 - `analyze_answer_visibility` — parse captured LLM answers and score business visibility against competitors.
@@ -23,17 +45,23 @@ This MVP is intentionally measurement-first. It does not scrape consumer AI plat
 ## Install
 
 ```bash
-git clone https://github.com/sixirixis/answerspot-sg-mcp.git
-cd answerspot-sg-mcp
+git clone https://github.com/sixirixis/kiasu-scout.git
+cd kiasu-scout
 python -m venv .venv
 source .venv/bin/activate
 pip install -e '.[dev]'
 ```
 
-## Run tests
+## Run the web MVP
 
 ```bash
-pytest -q
+python -m answerspot_sg_mcp.web
+```
+
+Open:
+
+```text
+http://127.0.0.1:8000
 ```
 
 ## Run as an MCP server
@@ -46,26 +74,32 @@ Example Hermes config:
 
 ```yaml
 mcp_servers:
-  answerspot_sg:
+  kiasu_scout:
     command: "python"
     args: ["-m", "answerspot_sg_mcp.server"]
     timeout: 120
+```
+
+## Run tests
+
+```bash
+pytest -q
+ruff check .
 ```
 
 ## Example analysis payload
 
 ```json
 {
-  "business_name": "BrightMinds Learning Hub",
-  "category": "primary tuition",
+  "business_name": "Little Explorers STEM Club",
+  "category": "STEM enrichment class",
   "location": "Tampines, Singapore",
-  "competitors": ["The Learning Lab", "Mind Stretcher", "Kumon"],
+  "competitors": ["The Learning Lab", "Saturday Kids", "Nullspace Robotics"],
   "answers": [
     {
       "platform": "ChatGPT",
-      "prompt": "What are the best primary math tuition centres near Tampines for a P4 student?",
-      "answer_text": "Parents often consider The Learning Lab, Mind Stretcher and Kumon...",
-      "captured_at": "2026-06-18T10:00:00Z"
+      "prompt": "What are the best STEM enrichment classes in Tampines for a primary school child?",
+      "answer_text": "Parents often compare Saturday Kids, Nullspace Robotics and Little Explorers STEM Club..."
     }
   ]
 }
