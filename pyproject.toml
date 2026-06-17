@@ -36,3 +36,6 @@ pythonpath = ["src"]
 [tool.ruff]
 line-length = 100
 src = ["src", "tests"]
+
+[tool.vercel]
+entrypoint = "src.answerspot_sg_mcp.web:app"
